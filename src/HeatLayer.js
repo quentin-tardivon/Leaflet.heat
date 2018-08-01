@@ -2,13 +2,13 @@
 
 L.HeatLayer = (L.Layer ? L.Layer : L.Class).extend({
 
-    // options: {
-    //     minOpacity: 0.05,
-    //     maxZoom: 18,
-    //     radius: 25,
-    //     blur: 15,
-    //     max: 1.0
-    // },
+  // options: {
+  //     minOpacity: 0.05,
+  //     maxZoom: 18,
+  //     radius: 25,
+  //     blur: 15,
+  //     max: 1.0
+  // },
 
     initialize: function (latlngs, options) {
         this._latlngs = latlngs;
@@ -49,7 +49,7 @@ L.HeatLayer = (L.Layer ? L.Layer : L.Class).extend({
 
         if (this.options.pane) {
             this.getPane().appendChild(this._canvas);
-        }else{
+        } else {
             map._panes.overlayPane.appendChild(this._canvas);
         }
 
@@ -65,7 +65,7 @@ L.HeatLayer = (L.Layer ? L.Layer : L.Class).extend({
     onRemove: function (map) {
         if (this.options.pane) {
             this.getPane().removeChild(this._canvas);
-        }else{
+        } else {
             map.getPanes().overlayPane.removeChild(this._canvas);
         }
 
@@ -88,7 +88,7 @@ L.HeatLayer = (L.Layer ? L.Layer : L.Class).extend({
         canvas.style[originProp] = '50% 50%';
 
         var size = this._map.getSize();
-        canvas.width  = size.x;
+        canvas.width = size.x;
         canvas.height = size.y;
 
         var animated = this._map.options.zoomAnimation && L.Browser.any3d;
@@ -116,7 +116,7 @@ L.HeatLayer = (L.Layer ? L.Layer : L.Class).extend({
         var size = this._map.getSize();
 
         if (this._heat._width !== size.x) {
-            this._canvas.width = this._heat._width  = size.x;
+            this._canvas.width = this._heat._width = size.x;
         }
         if (this._heat._height !== size.y) {
             this._canvas.height = this._heat._height = size.y;
@@ -133,8 +133,8 @@ L.HeatLayer = (L.Layer ? L.Layer : L.Class).extend({
             r = this._heat._r,
             size = this._map.getSize(),
             bounds = new L.Bounds(
-                L.point([-r, -r]),
-                size.add([r, r])),
+        L.point([-r, -r]),
+        size.add([r, r])),
 
             max = this.options.max === undefined ? 1 : this.options.max,
             maxZoom = this.options.maxZoom === undefined ? this._map.getMaxZoom() : this.options.maxZoom,
@@ -146,7 +146,7 @@ L.HeatLayer = (L.Layer ? L.Layer : L.Class).extend({
             offsetY = panePos.y % cellSize,
             i, len, p, cell, x, y, j, len2, k;
 
-        // console.time('process');
+    // console.time('process');
         for (i = 0, len = this._latlngs.length; i < len; i++) {
             p = this._map.latLngToContainerPoint(this._latlngs[i]);
             if (bounds.contains(p)) {
@@ -154,8 +154,8 @@ L.HeatLayer = (L.Layer ? L.Layer : L.Class).extend({
                 y = Math.floor((p.y - offsetY) / cellSize) + 2;
 
                 var alt =
-                    this._latlngs[i].alt !== undefined ? this._latlngs[i].alt :
-                    this._latlngs[i][2] !== undefined ? +this._latlngs[i][2] : 1;
+                    this._latlngs[i].alt !== undefined ? this._latlngs[i].alt
+                      : this._latlngs[i][2] !== undefined ? +this._latlngs[i][2] : 1;
                 k = alt * v;
 
                 grid[y] = grid[y] || [];
@@ -163,7 +163,6 @@ L.HeatLayer = (L.Layer ? L.Layer : L.Class).extend({
 
                 if (!cell) {
                     grid[y][x] = [p.x, p.y, k];
-
                 } else {
                     cell[0] = (cell[0] * cell[2] + p.x * k) / (cell[2] + k); // x
                     cell[1] = (cell[1] * cell[2] + p.y * k) / (cell[2] + k); // y
@@ -186,11 +185,11 @@ L.HeatLayer = (L.Layer ? L.Layer : L.Class).extend({
                 }
             }
         }
-        // console.timeEnd('process');
+    // console.timeEnd('process');
 
-        // console.time('draw ' + data.length);
+    // console.time('draw ' + data.length);
         this._heat.data(data).draw(this.options.minOpacity);
-        // console.timeEnd('draw ' + data.length);
+    // console.timeEnd('draw ' + data.length);
 
         this._frame = null;
     },
@@ -201,7 +200,6 @@ L.HeatLayer = (L.Layer ? L.Layer : L.Class).extend({
 
         if (L.DomUtil.setTransform) {
             L.DomUtil.setTransform(this._canvas, offset, scale);
-
         } else {
             this._canvas.style[L.DomUtil.TRANSFORM] = L.DomUtil.getTranslateString(offset) + ' scale(' + scale + ')';
         }
